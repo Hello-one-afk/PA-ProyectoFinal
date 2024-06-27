@@ -1,6 +1,5 @@
 package com.proyecto.app.models;
 
-import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -24,12 +23,6 @@ public class Nota {
 
     @Column(nullable = false, columnDefinition = "TEXT")
     private String contenido;
-
-    @Column(nullable = false)
-    private LocalDateTime fechaCreacion;
-
-    @Column(nullable = false)
-    private boolean privado;
 
     /*
      * @ManyToOne
