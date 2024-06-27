@@ -3,12 +3,11 @@ package com.proyecto.app.controllers;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.proyecto.app.models.Nota;
 import com.proyecto.app.services.NotaService;
 
 @Controller
@@ -27,12 +26,13 @@ public class NotaController {
 
     }
 
-    @PostMapping
-    public ResponseEntity<?> saveNotas(@RequestBody Nota nota) throws Exception {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteNota(@PathVariable Integer id) {
         try {
-            return ResponseEntity.ok(notaService.saveNota(nota));
+            notaService.deleteNota(id);
+            return ResponseEntity.noContent().build();
         } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
