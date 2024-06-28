@@ -17,7 +17,7 @@ import com.proyecto.app.models.Nota;
 import com.proyecto.app.services.NotaService;
 
 @RestController
-@RequestMapping("/notas")
+@RequestMapping("/api/notas")
 public class NotaController {
 
     @Autowired
