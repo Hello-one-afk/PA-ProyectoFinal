@@ -3,7 +3,9 @@ package com.proyecto.app.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +20,7 @@ import com.proyecto.app.services.NotaService;
 
 @RestController
 @RequestMapping("/v1/api/notas")
+@CrossOrigin(origins = "http://localhost:8080")
 public class NotaController {
 
     @Autowired
@@ -26,6 +29,15 @@ public class NotaController {
     @GetMapping
     public List<Nota> getAllNotas() {
         return notaService.getAllNotas();
+    }
+
+    @GetMapping("users/{userId}")
+    public ResponseEntity<List<Nota>> getNotasForUser(@PathVariable("userId") Long id) {
+        try {
+            return ResponseEntity.ok(notaService.getSNotasForUser(id));
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping("/{id}")
