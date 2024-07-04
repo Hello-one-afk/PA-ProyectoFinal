@@ -27,12 +27,16 @@ public class NotaController {
     private NotaService notaService;;
 
     @GetMapping
-    public List<Nota> getAllNotas() {
-        return notaService.getAllNotas();
+    public ResponseEntity<List<Nota>> getAllNotas() throws Exception{
+        try {
+            return ResponseEntity.ok(notaService.getAllNotas());
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping("users/{userId}")
-    public ResponseEntity<List<Nota>> getNotasForUser(@PathVariable("userId") Long id) {
+    public ResponseEntity<List<Nota>> getNotasForUser(@PathVariable("userId") Long id) throws Exception {
         try {
             return ResponseEntity.ok(notaService.getSNotasForUser(id));
         } catch (Exception e) {
@@ -41,22 +45,25 @@ public class NotaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Nota> getNotaById(@PathVariable Integer id) {
-        Nota nota = notaService.getNotaById(id);
-        if (nota != null) {
-            return ResponseEntity.ok(nota);
-        } else {
-            return ResponseEntity.notFound().build();
+    public ResponseEntity<Nota> getNotaById(@PathVariable Integer id) throws Exception {
+        try {
+          return ResponseEntity.ok(notaService.getNotaById(id));  
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
     @PostMapping
-    public Nota createNota(@RequestBody Nota nota) {
-        return notaService.createNota(nota);
+    public ResponseEntity<Nota> createNota(@RequestBody Nota nota) throws Exception {
+        try {
+            return ResponseEntity.ok(notaService.createNota(nota));
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Nota> updateNota(@PathVariable Integer id, @RequestBody Nota notaDetails) {
+    public ResponseEntity<Nota> updateNota(@PathVariable Integer id, @RequestBody Nota notaDetails) throws Exception {
         Nota updatedNota = notaService.updateNota(id, notaDetails);
         if (updatedNota != null) {
             return ResponseEntity.ok(updatedNota);
@@ -66,11 +73,12 @@ public class NotaController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteNota(@PathVariable Integer id) {
-        if (notaService.deleteNota(id)) {
-            return ResponseEntity.noContent().build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<Void> deleteNota(@PathVariable Integer id) throws Exception {
+        try {
+            notaService.deleteNota(id);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } 
     }
 }
