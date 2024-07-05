@@ -72,25 +72,6 @@ public class NotaController {
         }
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteNota(@PathVariable Integer id) throws Exception {
-        try {
-            notaService.deleteNota(id);
-            return ResponseEntity.ok().build();
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-    }
-
-    @DeleteMapping("users/{userId}")
-    public ResponseEntity<Void> deleteNotasForUser(@PathVariable("userId") Long userId) throws Exception {
-        try {
-            notaService.deleteNotasForUser(userId);
-            return ResponseEntity.ok().build();
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-    }
 
     @GetMapping("/publicas")
     public ResponseEntity<List<Nota>> obtenerNotasPublicas() {
@@ -101,5 +82,18 @@ public class NotaController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
+    
+    
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteNota(@PathVariable Integer id) throws Exception {
+        try {
+            notaService.deleteNota(id);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
 
 }
