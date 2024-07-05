@@ -81,4 +81,14 @@ public class NotaController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } 
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteNoteByAdmin(@PathVariable Integer noteId) {
+        try {
+            notaService.deleteNota(noteId);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 }
