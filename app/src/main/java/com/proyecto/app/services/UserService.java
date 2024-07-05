@@ -14,8 +14,10 @@ public class UserService {
 
     @Autowired
     private final UserRepository userRepository;
-    @Autowired
 
+
+
+    
     public List<User> getAll() throws Exception {
         try {
             return userRepository.findAll();
@@ -23,6 +25,14 @@ public class UserService {
             throw new Exception("Error fetching data: " + e.getMessage());
         }
     }
+
+    public User createUser(User userToCreate) throws Exception {
+        return userRepository.save(userToCreate);
+    }
+
+    
+
+
 
     public User getUserByID(Long ID) throws Exception {
         return userRepository.findById(ID).orElseThrow(
@@ -37,20 +47,10 @@ public class UserService {
             throw new Exception("This user doesn't exist! "+e.getMessage());
         }
     }
-    
+   
 
-    public User createUser(User userToCreate) throws Exception {
-        return userRepository.save(userToCreate);
-    }
 
-    public User changeUserRole(Long userId, String newRole) throws Exception {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new Exception("User not found"));
-        user.setRole(newRole);
-        return userRepository.save(user);
-    }
-
-    public User updateUserByAdmin(Long userId, User userUpdates) throws Exception {
+    public User updateUser(Long userId, User userUpdates) throws Exception {
         User userToUpdate = userRepository.findById(userId)
                 .orElseThrow(() -> new Exception("User not found"));
 
@@ -63,16 +63,4 @@ public class UserService {
         return userRepository.save(userToUpdate);
     }
 
-    public User updateUser(User userDetails) throws Exception {
-        User userToUpdate = userRepository.findById(userDetails.getId())
-                .orElseThrow(() -> new Exception("This user doesn't exist!"));
-
-        userToUpdate.setUsername(userToUpdate.getUsername());
-        userToUpdate.setName(userToUpdate.getName());
-        userToUpdate.setLastname(userToUpdate.getLastname());
-        userToUpdate.setEmail(userToUpdate.getEmail());
-        userToUpdate.setPassword(userToUpdate.getPassword());
-
-        return userRepository.save(userToUpdate);
-    }
 }

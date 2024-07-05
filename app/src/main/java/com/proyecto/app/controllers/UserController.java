@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.proyecto.app.models.User;
 import com.proyecto.app.services.UserService;
 import lombok.RequiredArgsConstructor;
-import java.util.Map;
 
 
 @RestController
@@ -30,16 +29,7 @@ public class UserController {
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
-    }
-
-    @GetMapping("/{userID}")
-    public ResponseEntity<?> getUserByID(@PathVariable Long userID) throws Exception {
-        try {
-            return ResponseEntity.ok(userService.getUserByID(userID));
-        } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
-        }
-    }
+    }  
 
     @PostMapping()
     public ResponseEntity<?> createUser(@RequestBody User userToCreate) throws Exception {
@@ -47,6 +37,16 @@ public class UserController {
             return ResponseEntity.ok(userService.createUser(userToCreate));
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+
+    @GetMapping("/{userID}")
+    public ResponseEntity<?> getUserByID(@PathVariable Long userID) throws Exception {
+        try {
+            return ResponseEntity.ok(userService.getUserByID(userID));
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
 
@@ -60,31 +60,13 @@ public class UserController {
         } 
     }
 
-    @PutMapping("/{userId}/change-role")
-    public ResponseEntity<?> changeUserRole(@PathVariable Long userId, @RequestBody Map<String, String> roleMap) {
-        try {
-            userService.changeUserRole(userId, roleMap.get("role"));
-            return ResponseEntity.ok().build();
-        } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
-    }
-
     @PutMapping("/{userId}/update")
-    public ResponseEntity<?> updateUserByAdmin(@PathVariable Long userId, @RequestBody User userUpdates) {
+    public ResponseEntity<?> updateUser(@PathVariable Long userId, @RequestBody User userUpdates) {
         try {
-            return ResponseEntity.ok(userService.updateUserByAdmin(userId, userUpdates));
+            return ResponseEntity.ok(userService.updateUser(userId, userUpdates));
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
-    @PutMapping
-    public ResponseEntity<?> updateUser(@RequestBody User userToUpdate) throws Exception {
-        try {
-            return ResponseEntity.ok(userService.updateUser(userToUpdate));
-        } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
-    }
 }
