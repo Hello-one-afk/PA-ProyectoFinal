@@ -47,6 +47,7 @@ public class NotaService {
     }
 
     public List<Nota> getSNotasForUser(Long userId) {
+
         return notaRepository.findByUserId(userId);
     }
 }

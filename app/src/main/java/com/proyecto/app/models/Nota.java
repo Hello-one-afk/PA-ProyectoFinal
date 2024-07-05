@@ -29,8 +29,8 @@ public class Nota {
     private String contenido;
 
     
-      @ManyToOne
-      @JoinColumn(name = "usuario_id", nullable = false)
-      private User user;
+    @ManyToOne
+    @JoinColumn(name = "usuario_id", nullable = false)
+    private User user;
      
 }

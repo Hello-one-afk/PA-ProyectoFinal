@@ -18,6 +18,7 @@ public class UserService {
     @Autowired
     private final UserRepository userRepository;
     @Autowired
+    private final NotaRepository notaRepository;
 
     public List<User> getAll() throws Exception {
         try {
@@ -32,11 +33,27 @@ public class UserService {
                 () -> new Exception("This user doesn't exist!"));
     }
 
+/*    public void deleteUserByID(Long ID) throws Exception {
+        List<Nota> notas = notaRepository.findByUserId(ID);
+        if (notas != null && !notas.isEmpty()) {
+            for (Nota nota : notas) {
+                notaRepository.delete(nota);
+            }
+        }
+        if (!userRepository.existsById(ID)) {
+            throw new Exception("This user doesn't exist!");
+        }
+        userRepository.deleteById(ID);
+    }*/
+
     public void deleteUserByID(Long ID) throws Exception {
-        User userToDelete = userRepository.findById(ID)
-                .orElseThrow(() -> new Exception("This user doesn't exist!"));
-        userRepository.delete(userToDelete);
+        try {
+            userRepository.deleteById(ID);
+        }catch(Exception e){
+            throw new Exception("This user doesn't exist! "+e.getMessage());
+        }
     }
+    
 
     public User createUser(User userToCreate) throws Exception {
         return userRepository.save(userToCreate);
