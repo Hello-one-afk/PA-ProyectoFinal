@@ -27,6 +27,9 @@ public class Nota {
     @Column(nullable = false, length = 255)
     private String titulo;
 
+    @Column(nullable = false)
+    private boolean publica;
+    
     @Column(nullable = false, columnDefinition = "TEXT")
     private String contenido;
 

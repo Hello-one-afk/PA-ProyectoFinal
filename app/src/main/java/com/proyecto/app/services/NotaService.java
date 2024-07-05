@@ -54,4 +54,8 @@ public class NotaService {
     public void deleteNotasForUser(Long userId) {
         notaRepository.deleteByUserId(userId);
     }
+
+    public List<Nota> obtenerNotasPublicas() {
+        return notaRepository.findByPublicaTrue();
+    }
 }

@@ -27,11 +27,11 @@ public class NotaController {
     private NotaService notaService;;
 
     @GetMapping
-    public ResponseEntity<List<Nota>> getAllNotas() throws Exception{
+    public ResponseEntity<List<Nota>> getAllNotas() throws Exception {
         try {
             return ResponseEntity.ok(notaService.getAllNotas());
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
@@ -47,7 +47,7 @@ public class NotaController {
     @GetMapping("/{id}")
     public ResponseEntity<Nota> getNotaById(@PathVariable Integer id) throws Exception {
         try {
-          return ResponseEntity.ok(notaService.getNotaById(id));  
+            return ResponseEntity.ok(notaService.getNotaById(id));
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -79,7 +79,7 @@ public class NotaController {
             return ResponseEntity.ok().build();
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        } 
+        }
     }
 
     @DeleteMapping("users/{userId}")
@@ -89,6 +89,16 @@ public class NotaController {
             return ResponseEntity.ok().build();
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/publicas")
+    public ResponseEntity<List<Nota>> obtenerNotasPublicas() {
+        try {
+            List<Nota> notasPublicas = notaService.obtenerNotasPublicas();
+            return ResponseEntity.ok(notasPublicas);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 

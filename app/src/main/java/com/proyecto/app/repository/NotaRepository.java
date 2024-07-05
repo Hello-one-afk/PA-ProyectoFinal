@@ -13,5 +13,6 @@ public interface NotaRepository extends JpaRepository<Nota, Integer> {
 
     List<Nota> findByUserId(Long userId);
     void deleteByUserId(Long userId);
+    List<Nota> findByPublicaTrue();
 
 }
