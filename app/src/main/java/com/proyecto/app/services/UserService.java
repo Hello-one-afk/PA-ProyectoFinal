@@ -47,6 +47,13 @@ public class UserService {
         return userRepository.save(userToCreate);
     }
 
+    public User changeUserRole(Long userId, String newRole) throws Exception {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new Exception("User not found"));
+        user.setRole(newRole);
+        return userRepository.save(user);
+    }
+
     public User updateUser(User userDetails) throws Exception {
         User userToUpdate = userRepository.findById(userDetails.getId())
                 .orElseThrow(() -> new Exception("This user doesn't exist!"));

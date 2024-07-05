@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.proyecto.app.models.User;
 import com.proyecto.app.services.UserService;
 import lombok.RequiredArgsConstructor;
+import java.util.Map;
 
 
 @RestController
@@ -57,6 +58,16 @@ public class UserController {
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         } 
+    }
+
+    @PutMapping("/{userId}/change-role")
+    public ResponseEntity<?> changeUserRole(@PathVariable Long userId, @RequestBody Map<String, String> roleMap) {
+        try {
+            userService.changeUserRole(userId, roleMap.get("role"));
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PutMapping
