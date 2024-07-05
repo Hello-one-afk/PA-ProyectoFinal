@@ -82,4 +82,14 @@ public class NotaController {
         } 
     }
 
+    @DeleteMapping("users/{userId}")
+    public ResponseEntity<Void> deleteNotasForUser(@PathVariable("userId") Long userId) throws Exception {
+        try {
+            notaService.deleteNotasForUser(userId);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
 }
