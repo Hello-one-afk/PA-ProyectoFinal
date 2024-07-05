@@ -33,18 +33,6 @@ public class UserService {
                 () -> new Exception("This user doesn't exist!"));
     }
 
-/*    public void deleteUserByID(Long ID) throws Exception {
-        List<Nota> notas = notaRepository.findByUserId(ID);
-        if (notas != null && !notas.isEmpty()) {
-            for (Nota nota : notas) {
-                notaRepository.delete(nota);
-            }
-        }
-        if (!userRepository.existsById(ID)) {
-            throw new Exception("This user doesn't exist!");
-        }
-        userRepository.deleteById(ID);
-    }*/
 
     public void deleteUserByID(Long ID) throws Exception {
         try {
