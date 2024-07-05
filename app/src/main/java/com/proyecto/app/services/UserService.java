@@ -3,7 +3,6 @@ package com.proyecto.app.services;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.proyecto.app.models.User;
 import com.proyecto.app.repository.UserRepository;
 
@@ -30,18 +29,6 @@ public class UserService {
                 () -> new Exception("This user doesn't exist!"));
     }
 
-/*    public void deleteUserByID(Long ID) throws Exception {
-        List<Nota> notas = notaRepository.findByUserId(ID);
-        if (notas != null && !notas.isEmpty()) {
-            for (Nota nota : notas) {
-                notaRepository.delete(nota);
-            }
-        }
-        if (!userRepository.existsById(ID)) {
-            throw new Exception("This user doesn't exist!");
-        }
-        userRepository.deleteById(ID);
-    }*/
 
     public void deleteUserByID(Long ID) throws Exception {
         try {
@@ -54,6 +41,26 @@ public class UserService {
 
     public User createUser(User userToCreate) throws Exception {
         return userRepository.save(userToCreate);
+    }
+
+    public User changeUserRole(Long userId, String newRole) throws Exception {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new Exception("User not found"));
+        user.setRole(newRole);
+        return userRepository.save(user);
+    }
+
+    public User updateUserByAdmin(Long userId, User userUpdates) throws Exception {
+        User userToUpdate = userRepository.findById(userId)
+                .orElseThrow(() -> new Exception("User not found"));
+
+        userToUpdate.setUsername(userUpdates.getUsername());
+        userToUpdate.setName(userUpdates.getName());
+        userToUpdate.setLastname(userUpdates.getLastname());
+        userToUpdate.setEmail(userUpdates.getEmail());
+        userToUpdate.setPassword(userUpdates.getPassword());
+
+        return userRepository.save(userToUpdate);
     }
 
     public User updateUser(User userDetails) throws Exception {
