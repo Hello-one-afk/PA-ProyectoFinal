@@ -4,9 +4,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.proyecto.app.models.Nota;
 import com.proyecto.app.models.User;
-import com.proyecto.app.repository.NotaRepository;
 import com.proyecto.app.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -18,7 +16,6 @@ public class UserService {
     @Autowired
     private final UserRepository userRepository;
     @Autowired
-    private final NotaRepository notaRepository;
 
     public List<User> getAll() throws Exception {
         try {
