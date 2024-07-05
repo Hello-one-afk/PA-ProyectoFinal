@@ -70,6 +70,15 @@ public class UserController {
         }
     }
 
+    @PutMapping("/{userId}/update")
+    public ResponseEntity<?> updateUserByAdmin(@PathVariable Long userId, @RequestBody User userUpdates) {
+        try {
+            return ResponseEntity.ok(userService.updateUserByAdmin(userId, userUpdates));
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
     @PutMapping
     public ResponseEntity<?> updateUser(@RequestBody User userToUpdate) throws Exception {
         try {

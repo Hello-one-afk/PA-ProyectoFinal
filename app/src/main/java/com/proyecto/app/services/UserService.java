@@ -3,8 +3,6 @@ package com.proyecto.app.services;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.proyecto.app.models.Nota;
 import com.proyecto.app.models.User;
 import com.proyecto.app.repository.NotaRepository;
 import com.proyecto.app.repository.UserRepository;
@@ -52,6 +50,19 @@ public class UserService {
                 .orElseThrow(() -> new Exception("User not found"));
         user.setRole(newRole);
         return userRepository.save(user);
+    }
+
+    public User updateUserByAdmin(Long userId, User userUpdates) throws Exception {
+        User userToUpdate = userRepository.findById(userId)
+                .orElseThrow(() -> new Exception("User not found"));
+
+        userToUpdate.setUsername(userUpdates.getUsername());
+        userToUpdate.setName(userUpdates.getName());
+        userToUpdate.setLastname(userUpdates.getLastname());
+        userToUpdate.setEmail(userUpdates.getEmail());
+        userToUpdate.setPassword(userUpdates.getPassword());
+
+        return userRepository.save(userToUpdate);
     }
 
     public User updateUser(User userDetails) throws Exception {
